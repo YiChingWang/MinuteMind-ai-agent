@@ -16,7 +16,13 @@ const client = new BedrockRuntimeClient({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://minutmind-ai-agent.vercel.app", // ✅ 改成你自己的 Vercel 網址
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {
