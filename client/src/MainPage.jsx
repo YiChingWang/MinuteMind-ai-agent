@@ -15,7 +15,7 @@ function MainPage() {
   const handleSubmit = async () => {
     setLoading(true); // 🚀 開始生成前設為 loading
     setSummary("");
-    const res = await fetch("http://localhost:3000/api/summary", {
+    const res = await fetch("https://minutmind-api.onrender.com/api/summary", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),
