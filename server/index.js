@@ -19,7 +19,7 @@ const client = new BedrockRuntimeClient({
 
 // ✅ CORS 設定（包含 localhost + Vercel 網址）
 const allowedOrigins = [
-  "https://minutmind-ai-agent.vercel.app", // ✅ 你的正式網址
+  "https://minutmind-ai-agent-7tvz.vercel.app", // ✅ 你的正式網址
   "http://localhost:5173", // ✅ 本地開發用（如果你用 Vite）
 ];
 
