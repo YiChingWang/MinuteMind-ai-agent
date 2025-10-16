@@ -39,7 +39,7 @@ app.use(
 );
 
 // ✅ 加這行讓 preflight OPTIONS 請求能成功
-app.options("*", cors());
+app.options(/.*/, cors());
 
 app.use(express.json());
 
