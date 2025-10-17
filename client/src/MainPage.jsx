@@ -13,7 +13,7 @@ function MainPage() {
   };
 
   const handleSubmit = async () => {
-    setLoading(true); // 🚀 開始生成前設為 loading
+    setLoading(true);
     setSummary("");
     const res = await fetch(
       "https://minutmind-ai-agent.onrender.com/api/summary",
@@ -47,7 +47,6 @@ function MainPage() {
             Go
           </button>
         </div>
-        {/* ✅ 只有在 loading 開始之後才會「出現」這個白色 summary 區塊 */}
         {(loading || summary) && (
           <div className="summary">
             {loading && (
