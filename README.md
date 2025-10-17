@@ -1,6 +1,6 @@
-# 🧠 MinutMind – AI Meeting Summarizer
+# 🧠 MinuteMind – AI Meeting Summarizer
 
-MinutMind is an AI-powered meeting summarization tool built for the **AWS AI Agent Global Hackathon**.  
+MinuteMind is an AI-powered meeting summarization tool built for the **AWS AI Agent Global Hackathon**.  
 It helps users turn messy meeting transcripts into **clear, structured, and actionable summaries** in just seconds — saving time and boosting team productivity.
 
 ---
