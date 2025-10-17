@@ -2,21 +2,22 @@ import "./Summary.css";
 
 function Summary({ summary }) {
   const parseSummary = (summary) => {
+    // ✨ 改善 regex，允許前後有冒號、換行、空白
     const topicMatch = summary.match(
-      /Topic\s*([\s\S]*?)(?=✅ Decisions|📌 Action Items|💡 Next Steps|$)/
+      /Topic[\s:]*([\s\S]*?)(?=✅ Decisions|📌 Action Items|💡 Next Steps|$)/
     );
     const decisionsMatch = summary.match(
-      /✅ Decisions\s*([\s\S]*?)(?=📌 Action Items|💡 Next Steps|$)/
+      /✅ Decisions[\s:]*([\s\S]*?)(?=📌 Action Items|💡 Next Steps|$)/
     );
     const actionItemsMatch = summary.match(
-      /📌 Action Items\s*([\s\S]*?)(?=💡 Next Steps|$)/
+      /📌 Action Items[\s:]*([\s\S]*?)(?=💡 Next Steps|$)/
     );
-    const nextStepsMatch = summary.match(/💡 Next Steps\s*([\s\S]*)/);
+    const nextStepsMatch = summary.match(/💡 Next Steps[\s:]*([\s\S]*)/);
 
     const splitItems = (text) =>
       text
         ? text
-            .split(/(?:\n| - )/)
+            .split(/(?:\n|^-|•|\*)/m) // 可支援多種 list 格式（換行、-、•、*）
             .map((item) => item.trim())
             .filter((item) => item.length > 0)
         : [];
@@ -58,11 +59,15 @@ function Summary({ summary }) {
 
         <div className="summary_item">
           <h4>📌 Action Items</h4>
-          <ul>
-            {actionItems.map((a, i) => (
-              <li key={`action-${i}`}>{a}</li>
-            ))}
-          </ul>
+          {actionItems.length > 0 ? (
+            <ul>
+              {actionItems.map((a, i) => (
+                <li key={`action-${i}`}>{a}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>—</p>
+          )}
         </div>
 
         <div className="summary_item">
