@@ -10,11 +10,20 @@ function Summary({ summary }) {
     );
     const nextStepsMatch = summary.match(/Next Steps:\s*([\s\S]*)/s);
 
+    // ✨ 把 `-` 分出來一行一行顯示
+    const splitItems = (text) =>
+      text
+        ? text
+            .split(/\s*-\s+/) // 以 dash 為分隔
+            .map((item) => item.trim())
+            .filter((item) => item.length > 0)
+        : [];
+
     return {
       topic: topicMatch?.[1]?.trim() || "—",
-      decisions: decisionsMatch?.[1]?.trim() || "—",
-      actionItems: actionItemsMatch?.[1]?.trim() || "—",
-      nextSteps: nextStepsMatch?.[1]?.trim() || "—",
+      decisions: splitItems(decisionsMatch?.[1]),
+      actionItems: splitItems(actionItemsMatch?.[1]),
+      nextSteps: splitItems(nextStepsMatch?.[1]),
     };
   };
 
