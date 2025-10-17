@@ -1,20 +1,31 @@
 import "./Summary.css";
+
 function Summary({ summary }) {
   const parseSummary = (summary) => {
-    const topicMatch = summary.match(/Topic:\s*(.*?)(?=Decisions:|$)/s);
+    const topicMatch = summary.match(
+      /Topic\s*([\s\S]*?)(?=✅ Decisions|📌 Action Items|💡 Next Steps|$)/
+    );
     const decisionsMatch = summary.match(
-      /Decisions:\s*([\s\S]*?)(?=Action Items:|$)/s
+      /✅ Decisions\s*([\s\S]*?)(?=📌 Action Items|💡 Next Steps|$)/
     );
     const actionItemsMatch = summary.match(
-      /Action Items:\s*([\s\S]*?)(?=Next Steps:|$)/s
+      /📌 Action Items\s*([\s\S]*?)(?=💡 Next Steps|$)/
     );
-    const nextStepsMatch = summary.match(/Next Steps:\s*([\s\S]*)/s);
+    const nextStepsMatch = summary.match(/💡 Next Steps\s*([\s\S]*)/);
+
+    const splitItems = (text) =>
+      text
+        ? text
+            .split(/(?:\n| - )/)
+            .map((item) => item.trim())
+            .filter((item) => item.length > 0)
+        : [];
 
     return {
       topic: topicMatch?.[1]?.trim() || "—",
-      decisions: decisionsMatch?.[1]?.trim() || "—",
-      actionItems: actionItemsMatch?.[1]?.trim() || "—",
-      nextSteps: nextStepsMatch?.[1]?.trim() || "—",
+      decisions: splitItems(decisionsMatch?.[1]),
+      actionItems: splitItems(actionItemsMatch?.[1]),
+      nextSteps: splitItems(nextStepsMatch?.[1]),
     };
   };
 
@@ -30,21 +41,37 @@ function Summary({ summary }) {
 
       <div className="summary_ans">
         <h3 className="summary_content">📊 Meeting Summary</h3>
+
         <div className="summary_item">
           <h4>📝 Topic</h4>
           <p>{topic}</p>
         </div>
+
         <div className="summary_item">
           <h4>✅ Decisions</h4>
-          <p>{decisions}</p>
+          <ul>
+            {decisions.map((d, i) => (
+              <li key={`decision-${i}`}>{d}</li>
+            ))}
+          </ul>
         </div>
+
         <div className="summary_item">
           <h4>📌 Action Items</h4>
-          <p>{actionItems}</p>
+          <ul>
+            {actionItems.map((a, i) => (
+              <li key={`action-${i}`}>{a}</li>
+            ))}
+          </ul>
         </div>
+
         <div className="summary_item">
           <h4>💡 Next Steps</h4>
-          <p>{nextSteps}</p>
+          <ul>
+            {nextSteps.map((n, i) => (
+              <li key={`next-${i}`}>{n}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </>
